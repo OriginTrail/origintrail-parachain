@@ -1,25 +1,17 @@
 use cumulus_primitives_core::ParaId;
-use origintrail_parachain_runtime::{AccountId, Signature, EVMConfig, EthereumConfig, GLMR, InflationInfo, Range, AuthorFilterConfig,
+use origintrail_parachain_runtime::{AccountId, EVMConfig, EthereumConfig, GLMR, InflationInfo, Range, AuthorFilterConfig,
 									AuthorMappingConfig, Balance, BalancesConfig, EthereumChainIdConfig, CouncilConfig, 
 									GenesisConfig, ParachainInfoConfig, SudoConfig, SystemConfig, WASM_BINARY, ParachainStakingConfig};
 
 use sc_chain_spec::{ChainSpecExtension, ChainSpecGroup};
 use sc_service::ChainType;
 use serde::{Deserialize, Serialize};
-use sp_core::{H160, U256, Pair, Public, sr25519};
-use sp_runtime::{
-	traits::{BlakeTwo256, Hash, IdentifyAccount, Verify},
-	Perbill, Percent
-};
-
+use sp_core::{H160, Pair, Public};
+use sp_runtime::{Perbill, Percent};
 
 use pallet_evm::GenesisAccount;
 use std::str::FromStr;
-use serde_json as json;
 use nimbus_primitives::NimbusId;
-
-use std::convert::TryInto;
-
 
 /// Specialized `ChainSpec` for the normal parachain runtime.
 pub type ChainSpec = sc_service::GenericChainSpec<GenesisConfig, Extensions>;

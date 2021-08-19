@@ -1,5 +1,4 @@
 use crate::chain_spec;
-use sp_core::H160;
 use std::path::PathBuf;
 use std::str::FromStr;
 use structopt::StructOpt;
@@ -147,12 +146,6 @@ pub struct RunCmd {
 	/// Maximum number of logs in a query.
 	#[structopt(long, default_value = "10000")]
 	pub max_past_logs: u32,
-}
-
-fn parse_h160(input: &str) -> Result<H160, String> {
-	input
-		.parse::<H160>()
-		.map_err(|_| "Failed to parse H160".to_string())
 }
 
 impl std::ops::Deref for RunCmd {

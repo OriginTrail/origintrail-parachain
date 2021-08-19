@@ -1,14 +1,13 @@
 use crate::{
 	chain_spec,
-	cli::{Cli, RelayChainCli, RunCmd, Subcommand, RpcConfig},
+	cli::{Cli, RelayChainCli, Subcommand, RpcConfig},
 };
 use codec::Encode;
 use cumulus_client_service::genesis::generate_genesis_block;
 use cumulus_primitives_core::ParaId;
 use log::info;
-use origintrail_parachain_runtime::{AccountId, Block};
+use origintrail_parachain_runtime::{Block};
 use polkadot_parachain::primitives::AccountIdConversion;
-use polkadot_service::RococoChainSpec;
 use sc_cli::{
 	ChainSpec, CliConfiguration, DefaultConfigurationValues, ImportParams, KeystoreParams,
 	NetworkParams, Result, RuntimeVersion, SharedParams, SubstrateCli,
@@ -18,9 +17,8 @@ use sc_service::{
 	PartialComponents,
 };
 use sp_core::hexdisplay::HexDisplay;
-use sp_core::H160;
 use sp_runtime::traits::Block as _;
-use std::{io::Write, net::SocketAddr, str::FromStr};
+use std::{io::Write, net::SocketAddr};
 
 fn load_spec(
 	id: &str,
@@ -150,7 +148,7 @@ pub fn run() -> Result<()> {
 					task_manager,
 					import_queue,
 					..
-				} = crate::service::new_partial(&config, None, dev_service)?;
+				} = crate::service::new_partial(&config, dev_service)?;
 				Ok((cmd.run(client, import_queue), task_manager))
 			})
 		}
@@ -161,7 +159,7 @@ pub fn run() -> Result<()> {
 					client,
 					task_manager,
 					..
-				} = crate::service::new_partial(&config, None, false)?;
+				} = crate::service::new_partial(&config, false)?;
 				Ok((cmd.run(client, config.database), task_manager))
 			})
 		}
@@ -172,7 +170,7 @@ pub fn run() -> Result<()> {
 					client,
 					task_manager,
 					..
-				} = crate::service::new_partial(&config, None, false)?;
+				} = crate::service::new_partial(&config, false)?;
 				Ok((cmd.run(client, config.chain_spec), task_manager))
 			})
 		}
@@ -189,7 +187,7 @@ pub fn run() -> Result<()> {
 					task_manager,
 					import_queue,
 					..
-				} = crate::service::new_partial(&config, None, dev_service)?;
+				} = crate::service::new_partial(&config, dev_service)?;
 				Ok((cmd.run(client, import_queue), task_manager))
 			})
 		}
@@ -234,7 +232,7 @@ pub fn run() -> Result<()> {
 					task_manager,
 					backend,
 					..
-				} = crate::service::new_partial(&config, None, false)?;
+				} = crate::service::new_partial(&config, false)?;
 				Ok((cmd.run(client, backend), task_manager))
 			})
 		}

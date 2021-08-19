@@ -9,20 +9,18 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 use sp_api::impl_runtime_apis;
 use sp_core::{ U256, H160, H256,
 	OpaqueMetadata,
-	crypto::KeyTypeId,
-	u32_trait::{_1, _2, _3, _4}
+	u32_trait::{_1, _2}
 };
 use sp_runtime::traits::{
-	AccountIdLookup,IdentityLookup, BlakeTwo256, Block as BlockT, IdentifyAccount, Verify,
+	IdentityLookup, BlakeTwo256, Block as BlockT, IdentifyAccount, Verify,
 };
 use sp_runtime::{
 	create_runtime_str, generic, impl_opaque_keys,
 	transaction_validity::{TransactionSource, TransactionValidity},
-	ApplyExtrinsicResult, MultiSignature, Percent,
+	ApplyExtrinsicResult, Percent,
 };
-use sha3::{Digest, Keccak256};
 use pallet_ethereum::Call::transact;
-use pallet_ethereum::{Transaction as EthereumTransaction, TransactionAction};
+use pallet_ethereum::{Transaction as EthereumTransaction};
 
 use sp_std::{convert::TryFrom, prelude::*};
 #[cfg(feature = "std")]
@@ -30,8 +28,7 @@ use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 
 use frame_system::{
-	EnsureOneOf, EnsureRoot, RawOrigin,
-    limits::{BlockLength, BlockWeights},
+	EnsureOneOf, EnsureRoot, limits::{BlockLength, BlockWeights},
 };
 
 // Polkadot imports
@@ -40,8 +37,8 @@ use xcm::v0::{MultiAsset, MultiLocation, MultiLocation::*, Junction::*, BodyId, 
 use xcm_builder::{
 	AccountId32Aliases, CurrencyAdapter, LocationInverter, ParentIsDefault, RelayChainAsNative,
 	SiblingParachainAsNative, SiblingParachainConvertsVia, SignedAccountId32AsNative,
-	SovereignSignedViaLocation, FixedRateOfConcreteFungible, EnsureXcmOrigin,
-	AllowTopLevelPaidExecutionFrom, TakeWeightCredit, FixedWeightBounds, IsConcrete, NativeAsset,
+	SovereignSignedViaLocation,  EnsureXcmOrigin, AllowTopLevelPaidExecutionFrom, 
+	TakeWeightCredit, FixedWeightBounds, IsConcrete, NativeAsset,
 	AllowUnpaidExecutionFrom, ParentAsSuperuser, UsingComponents
 };
 use xcm_executor::{Config, XcmExecutor};
@@ -49,7 +46,8 @@ use pallet_xcm::XcmPassthrough;
 use xcm::v0::Xcm;
 
 use pallet_evm::{
-    Account as EVMAccount, Runner, EnsureAddressNever, EnsureAddressRoot, EnsureAddressSame, FeeCalculator, IdentityAddressMapping, EnsureAddressTruncated, HashedAddressMapping,
+    Account as EVMAccount, Runner, EnsureAddressNever, 
+	EnsureAddressRoot, FeeCalculator, IdentityAddressMapping, 
 };
 
 pub use parachain_staking::{InflationInfo, Range};
@@ -59,7 +57,6 @@ use codec::{Decode, Encode};
 use precompiles::OriginTrailParachainPrecompiles;
 use fp_rpc::TransactionStatus;
 use evm::Config as EvmConfig;
-use pallet_transaction_payment::{Multiplier, TargetedFeeAdjustment};
 
 // A few exports that help ease life for downstream crates.
 pub use frame_support::{

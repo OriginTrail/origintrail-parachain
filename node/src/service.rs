@@ -1,10 +1,9 @@
 use crate::cli::EthApi as EthApiCmd;
 use crate::{
-	cli::{RunCmd, Sealing, RpcConfig},
+	cli::{Sealing, RpcConfig},
 	inherents::MockValidationDataInherentDataProvider,
 	chain_spec::get_from_seed,
 };
-use async_io::Timer;
 use cumulus_client_network::build_block_announce_validator;
 use cumulus_client_service::{
 	prepare_node_config, start_collator, start_full_node, StartCollatorParams, StartFullNodeParams,
@@ -13,7 +12,7 @@ use fc_consensus::FrontierBlockImport;
 use fc_mapping_sync::MappingSyncWorker;
 use fc_rpc::EthTask;
 use fc_rpc_core::types::{FilterPool, PendingTransactions};
-use futures::{Stream, StreamExt};
+use futures::{StreamExt};
 use moonbeam_rpc_debug::DebugHandler;
 use origintrail_parachain_runtime::{opaque::Block, RuntimeApi};
 use nimbus_consensus::{
@@ -24,14 +23,13 @@ use nimbus_primitives::NimbusId;
 use polkadot_primitives::v0::CollatorPair;
 use sc_cli::SubstrateCli;
 use sc_client_api::BlockchainEvents;
-use sc_consensus_manual_seal::{run_manual_seal, EngineCommand, ManualSealParams};
 use sc_executor::native_executor_instance;
 pub use sc_executor::NativeExecutor;
 use sc_service::{
 	error::Error as ServiceError, BasePath, Configuration, PartialComponents, Role, TFullBackend,
 	TFullClient, TaskManager,
 };
-use sp_core::{H160, H256};
+use sp_core::{H160};
 use std::{
 	collections::{BTreeMap, HashMap},
 	sync::{Arc, Mutex},
@@ -76,10 +74,6 @@ pub fn open_frontier_backend(config: &Configuration) -> Result<Arc<fc_db::Backen
 	)?))
 }
 
-use sp_runtime::traits::BlakeTwo256;
-use sp_trie::PrefixedMemoryDB;
-
-
 /// Builds the PartialComponents for a parachain or development service
 ///
 /// Use this macro if you don't actually need the full service, but just the builder in order to
@@ -87,7 +81,6 @@ use sp_trie::PrefixedMemoryDB;
 #[allow(clippy::type_complexity)]
 pub fn new_partial(
 	config: &Configuration,
-	author: Option<nimbus_primitives::NimbusId>,
 	dev_service: bool,
 ) -> Result<
 	PartialComponents<
@@ -208,8 +201,7 @@ pub fn new_partial(
 #[sc_tracing::logging::prefix_logs_with("Parachain")]
 async fn start_node_impl<RB>(
 	parachain_config: Configuration,
-	collator_key: CollatorPair,
-	author_id: Option<H160>,
+	_collator_key: CollatorPair,
 	polkadot_config: Configuration,
 	id: polkadot_primitives::v0::Id,
 	collator: bool,
@@ -229,7 +221,7 @@ where
 
 	let parachain_config = prepare_node_config(parachain_config);
 
-	let params = new_partial(&parachain_config, None, false)?;
+	let params = new_partial(&parachain_config, false)?;
 	let (
 		block_import,
 		pending_transactions,
@@ -484,7 +476,7 @@ where
 pub async fn start_node(
 	parachain_config: Configuration,
 	collator_key: CollatorPair,
-	author_id: Option<H160>,
+	_author_id: Option<H160>,
 	polkadot_config: Configuration,
 	id: polkadot_primitives::v0::Id,
 	collator: bool,
@@ -493,7 +485,6 @@ pub async fn start_node(
 	start_node_impl(
 		parachain_config,
 		collator_key,
-		author_id,
 		polkadot_config,
 		id,
 		collator,
@@ -533,7 +524,7 @@ pub fn new_dev(
 				_telemetry_worker_handle,
 				frontier_backend,
 			),
-	} = new_partial(&config, _author_id, true)?;
+	} = new_partial(&config, true)?;
 
 	let (network, system_rpc_tx, network_starter) =
 		sc_service::build_network(sc_service::BuildNetworkParams {

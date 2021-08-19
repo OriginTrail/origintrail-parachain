@@ -1,7 +1,7 @@
 [package]
 authors = ['TraceLabs']
 edition = '2018'
-homepage = 'https://substrate.dev'
+homepage = 'https://tracelabs.io/'
 license = 'Unlicense'
 name = 'origintrail-parachain-runtime'
 repository = 'https://github.com/OriginTrail/starfleet-parachain'
@@ -11,34 +11,34 @@ version = '3.0.0'
 targets = ['x86_64-unknown-linux-gnu']
 
 [build-dependencies]
-substrate-wasm-builder = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.6" }
+substrate-wasm-builder = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6' }
 
 [dependencies]
-smallvec = "1.6.1"
 codec = { package = 'parity-scale-codec', version = '2.0.0', default-features = false, features = ['derive']}
-log = { version = "0.4.14", default-features = false }
-hex-literal = "0.3.1"
+hex-literal = '0.3.1'
+evm = { version = '0.27.0', default-features = false, features = ['with-codec'] }
+log = { version = '0.4.14', default-features = false }
 serde = { version = '1.0.119', optional = true, features = ['derive'] }
-evm = { version = "0.27.0", default-features = false, features = ["with-codec"] }
-sha3 = { version = "0.9", default-features = false }
+sha3 = { version = '0.9', default-features = false }
+smallvec = '1.6.1'
 
-pallet-author-inherent = { git = "https://github.com/purestake/cumulus", branch = "nimbus-polkadot-v0.9.6", default-features = false }
-precompiles = { path = "./precompiles/", default-features = false }
-account = { path = "../primitives/account/", default-features = false }
-pallet-ethereum-chain-id = { path = "../pallets/ethereum-chain-id", default-features = false }
-parachain-staking = { path = "../pallets/parachain-staking", default-features = false }
-pallet-author-slot-filter = { git = "https://github.com/purestake/cumulus", branch = "nimbus-polkadot-v0.9.6", default-features = false }
-nimbus-primitives = { git = "https://github.com/purestake/cumulus", branch = "nimbus-polkadot-v0.9.6", default-features = false }
-pallet-author-mapping = { path = "../pallets/author-mapping", default-features = false }
+pallet-author-inherent = { git = 'https://github.com/purestake/cumulus', branch = 'nimbus-polkadot-v0.9.6', default-features = false }
+pallet-author-slot-filter = { git = 'https://github.com/purestake/cumulus', branch = 'nimbus-polkadot-v0.9.6', default-features = false }
+nimbus-primitives = { git = 'https://github.com/purestake/cumulus', branch = 'nimbus-polkadot-v0.9.6', default-features = false }
+account = { path = '../primitives/account/', default-features = false }
+pallet-author-mapping = { path = '../pallets/author-mapping', default-features = false }
+pallet-ethereum-chain-id = { path = '../pallets/ethereum-chain-id', default-features = false }
+parachain-staking = { path = '../pallets/parachain-staking', default-features = false }
+precompiles = { path = './precompiles/', default-features = false }
 
-moonbeam-rpc-primitives-debug = { path = "../primitives/rpc/debug", default-features = false }
-moonbeam-rpc-primitives-txpool = { path = "../primitives/rpc/txpool", default-features = false }
-moonbeam-evm-tracer = { path = "./evm_tracer", default-features = false }
+moonbeam-rpc-primitives-debug = { path = '../primitives/rpc/debug', default-features = false }
+moonbeam-rpc-primitives-txpool = { path = '../primitives/rpc/txpool', default-features = false }
+moonbeam-evm-tracer = { path = './evm_tracer', default-features = false }
 
 # Frontier
-pallet-evm = { git = "https://github.com/purestake/frontier", default-features = false, branch = "moonbeam-polkadot-v0.9.6" }
-pallet-ethereum = { default-features = false, git = "https://github.com/purestake/frontier", branch = "moonbeam-polkadot-v0.9.6" }
-fp-rpc = { default-features = false, git = "https://github.com/purestake/frontier", branch = "moonbeam-polkadot-v0.9.6" }
+fp-rpc = { default-features = false, git = 'https://github.com/purestake/frontier', branch = 'moonbeam-polkadot-v0.9.6' }
+pallet-ethereum = { default-features = false, git = 'https://github.com/purestake/frontier', branch = 'moonbeam-polkadot-v0.9.6' }
+pallet-evm = { git = 'https://github.com/purestake/frontier', default-features = false, branch = 'moonbeam-polkadot-v0.9.6' }
 
 # Substrate Dependencies
 
@@ -46,7 +46,6 @@ fp-rpc = { default-features = false, git = "https://github.com/purestake/frontie
 sp-api = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 sp-block-builder = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 sp-core = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
-#sp-consensus-aura = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 sp-inherents = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 sp-io = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 sp-offchain = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
@@ -55,48 +54,47 @@ sp-session = { git = 'https://github.com/paritytech/substrate', branch = 'polkad
 sp-std = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 sp-transaction-pool = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 sp-version = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
-max-encoded-len = { git = "https://github.com/paritytech/substrate", default-features = false, branch = "polkadot-v0.9.6", features = ["derive"] }
+max-encoded-len = { git = 'https://github.com/paritytech/substrate', default-features = false, branch = 'polkadot-v0.9.6', features = ['derive'] }
 
 ## Substrate FRAME Dependencies
-frame-executive = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 frame-benchmarking = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false, optional = true }
+frame-executive = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 frame-support = { git = 'https://github.com/paritytech/substrate', default-features = false, branch = 'polkadot-v0.9.6' }
 frame-system = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 frame-system-benchmarking = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false, optional = true }
 frame-system-rpc-runtime-api = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 
 ## Substrate Pallet Dependencies
-#pallet-aura = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.6", default-features = false }
 pallet-balances = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
-pallet-collective = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.6", default-features = false }
+pallet-collective = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 pallet-multisig = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
-pallet-membership = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.6", default-features = false }
+pallet-membership = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 pallet-randomness-collective-flip = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 pallet-scheduler = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 pallet-sudo = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 pallet-timestamp = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 pallet-transaction-payment = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 pallet-transaction-payment-rpc-runtime-api = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
-pallet-treasury = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.6", default-features = false }
+pallet-treasury = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 
 
 # Cumulus Dependencies
 
-cumulus-pallet-parachain-system = { git = "https://github.com/purestake/cumulus", default-features = false, branch = "nimbus-polkadot-v0.9.6" }
+cumulus-pallet-parachain-system = { git = 'https://github.com/purestake/cumulus', default-features = false, branch = 'nimbus-polkadot-v0.9.6' }
 cumulus-pallet-xcm = { git = 'https://github.com/paritytech/cumulus', branch = 'polkadot-v0.9.6', default-features = false }
-#cumulus-pallet-xcmp-queue = { git = 'https://github.com/paritytech/cumulus', branch = 'polkadot-v0.9.6', default-features = false }
-cumulus-primitives-core = { git = "https://github.com/purestake/cumulus", default-features = false, branch = "nimbus-polkadot-v0.9.6" }
-cumulus-primitives-timestamp = { git = "https://github.com/purestake/cumulus", default-features = false, branch = "nimbus-polkadot-v0.9.6" }
+cumulus-primitives-core = { git = 'https://github.com/purestake/cumulus', default-features = false, branch = 'nimbus-polkadot-v0.9.6' }
+cumulus-primitives-timestamp = { git = 'https://github.com/purestake/cumulus', default-features = false, branch = 'nimbus-polkadot-v0.9.6' }
 cumulus-primitives-utility = { git = 'https://github.com/paritytech/cumulus', branch = 'polkadot-v0.9.6', default-features = false }
-parachain-info = { git = "https://github.com/purestake/cumulus", default-features = false, branch = "nimbus-polkadot-v0.9.6" }
+parachain-info = { git = 'https://github.com/purestake/cumulus', default-features = false, branch = 'nimbus-polkadot-v0.9.6' }
+#cumulus-pallet-xcmp-queue = { git = 'https://github.com/paritytech/cumulus', branch = 'polkadot-v0.9.6', default-features = false }
+
 
 # Polkadot Dependencies
+pallet-xcm = { git = 'https://github.com/paritytech/polkadot', branch = 'release-v0.9.6', default-features = false }
 polkadot-parachain = { git = 'https://github.com/paritytech/polkadot', branch = 'release-v0.9.6', default-features = false }
 xcm = { git = 'https://github.com/paritytech/polkadot', branch = 'release-v0.9.6', default-features = false }
 xcm-builder = { git = 'https://github.com/paritytech/polkadot', branch = 'release-v0.9.6', default-features = false }
 xcm-executor = { git = 'https://github.com/paritytech/polkadot', branch = 'release-v0.9.6', default-features = false }
-pallet-xcm = { git = 'https://github.com/paritytech/polkadot', branch = 'release-v0.9.6', default-features = false }
-
 
 [features]
 default = ['std']
@@ -145,23 +143,23 @@ std = [
 	'cumulus-pallet-xcm/std',
 	#'cumulus-pallet-xcmp-queue/std',
 	'cumulus-primitives-utility/std',
-	"pallet-ethereum-chain-id/std",
-	"pallet-ethereum/std",
-	"pallet-evm/std",
-	"moonbeam-rpc-primitives-debug/std",
-	"moonbeam-rpc-primitives-txpool/std",
-	"fp-rpc/std",
-	"pallet-transaction-payment-rpc-runtime-api/std",
-	"sha3/std",
-	"pallet-multisig/std",
-	"pallet-scheduler/std",
-	"pallet-author-inherent/std",
-	"evm/std",
-	"account/std",
-	"parachain-staking/std",
-	"pallet-author-slot-filter/std",
-	"nimbus-primitives/std",
-	"pallet-author-mapping/std",
-	"moonbeam-evm-tracer/std",
-	"max-encoded-len/std"
+	'pallet-ethereum-chain-id/std',
+	'pallet-ethereum/std',
+	'pallet-evm/std',
+	'moonbeam-rpc-primitives-debug/std',
+	'moonbeam-rpc-primitives-txpool/std',
+	'moonbeam-evm-tracer/std',
+	'fp-rpc/std',
+	'pallet-transaction-payment-rpc-runtime-api/std',
+	'sha3/std',
+	'pallet-multisig/std',
+	'pallet-scheduler/std',
+	'pallet-author-inherent/std',
+	'evm/std',
+	'account/std',
+	'parachain-staking/std',
+	'pallet-author-slot-filter/std',
+	'nimbus-primitives/std',
+	'pallet-author-mapping/std',
+	'max-encoded-len/std'
 ]

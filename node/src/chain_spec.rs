@@ -1,5 +1,5 @@
 use cumulus_primitives_core::ParaId;
-use origintrail_parachain_runtime::{AccountId, EVMConfig, EthereumConfig, GLMR, InflationInfo, Range, AuthorFilterConfig,
+use origintrail_parachain_runtime::{AccountId, EVMConfig, EthereumConfig, UNIT, InflationInfo, Range, AuthorFilterConfig,
 									AuthorMappingConfig, Balance, BalancesConfig, EthereumChainIdConfig, CouncilConfig, 
 									GenesisConfig, ParachainInfoConfig, SudoConfig, SystemConfig, WASM_BINARY, ParachainStakingConfig};
 
@@ -54,7 +54,7 @@ pub fn development_config(para_id: ParaId) -> ChainSpec {
 				vec![(
 					AccountId::from_str("6Be02d1d3665660d22FF9624b7BE0551ee1Ac91b").unwrap(),
 					get_from_seed::<NimbusId>("Alice"),
-					1_000 * GLMR,
+					1_000 * UNIT,
 				)],
 				// Nominations
 				vec![],
@@ -95,7 +95,7 @@ pub fn local_testnet_config(para_id: ParaId) -> ChainSpec {
 				vec![(
 					AccountId::from_str("6Be02d1d3665660d22FF9624b7BE0551ee1Ac91b").unwrap(),
 					get_from_seed::<NimbusId>("Alice"),
-					1_000 * GLMR,
+					1_000 * UNIT,
 				)],
 				// Nominations
 				vec![],
@@ -119,9 +119,9 @@ pub fn local_testnet_config(para_id: ParaId) -> ChainSpec {
 pub fn moonbeam_inflation_config() -> InflationInfo<Balance> {
 	InflationInfo {
 		expect: Range {
-			min: 100_000 * GLMR,
-			ideal: 200_000 * GLMR,
-			max: 500_000 * GLMR,
+			min: 100_000 * UNIT,
+			ideal: 200_000 * UNIT,
+			max: 500_000 * UNIT,
 		},
 		annual: Range {
 			min: Perbill::from_percent(4),

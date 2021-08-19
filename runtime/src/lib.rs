@@ -57,6 +57,7 @@ use codec::{Decode, Encode};
 use precompiles::OriginTrailParachainPrecompiles;
 use fp_rpc::TransactionStatus;
 use evm::Config as EvmConfig;
+pub use constants::{currency::*, time::*};
 
 // A few exports that help ease life for downstream crates.
 pub use frame_support::{
@@ -74,6 +75,8 @@ pub use pallet_timestamp::Call as TimestampCall;
 #[cfg(any(feature = "std", test))]
 pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill, Perquintill};
+
+mod constants;
 
 pub type Precompiles = OriginTrailParachainPrecompiles<Runtime>;
 
@@ -134,21 +137,6 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
     apis: RUNTIME_API_VERSIONS,
     transaction_version: 2,
 };
-
-/// This determines the average expected block time that we are targetting.
-/// Blocks will be produced at a minimum duration defined by `SLOT_DURATION`.
-/// `SLOT_DURATION` is picked up by `pallet_timestamp` which is in turn picked
-/// up by `pallet_aura` to implement `fn slot_duration()`.
-///
-/// Change this to adjust the block time.
-pub const MILLISECS_PER_BLOCK: u64 = 12000;
-
-pub const SLOT_DURATION: u64 = MILLISECS_PER_BLOCK;
-
-// Time is measured by number of blocks.
-pub const MINUTES: BlockNumber = 60_000 / (MILLISECS_PER_BLOCK as BlockNumber);
-pub const HOURS: BlockNumber = MINUTES * 60;
-pub const DAYS: BlockNumber = HOURS * 24;
 
 // 1 in 4 blocks (on average, not counting collisions) will be primary babe blocks.
 pub const PRIMARY_PROBABILITY: (u64, u64) = (1, 4);
@@ -341,9 +329,6 @@ impl cumulus_pallet_parachain_system::Config for Runtime {
 
 impl parachain_info::Config for Runtime {}
 
-/// GLMR, the native token, uses 18 decimals of precision.
-pub const GLMR: Balance = 1_000_000_000_000_000_000;
-
 parameter_types! {
 	/// Minimum round length is 2 minutes (20 * 6 second block times)
 	pub const MinBlocksPerRound: u32 = 20;
@@ -362,9 +347,9 @@ parameter_types! {
 	/// Default percent of inflation set aside for parachain bond every round
 	pub const DefaultParachainBondReservePercent: Percent = Percent::from_percent(30);
 	/// Minimum stake required to be reserved to be a collator is 1_000
-	pub const MinCollatorStk: u128 = 1_000 * GLMR;
+	pub const MinCollatorStk: u128 = KILOUNIT;
 	/// Minimum stake required to be reserved to be a nominator is 5
-	pub const MinNominatorStk: u128 = 5 * GLMR;
+	pub const MinNominatorStk: u128 = 5 * UNIT;
 }
 impl parachain_staking::Config for Runtime {
 	type Event = Event;
@@ -699,7 +684,7 @@ impl pallet_membership::Config<CouncilMembershipInstance> for Runtime {
 
 parameter_types! {
 	pub const ProposalBond: Permill = Permill::from_percent(5);
-	pub const ProposalBondMinimum: Balance = 1 * DOLLARS;
+	pub const ProposalBondMinimum: Balance = 100 * MICROUNIT;
 	pub const SpendPeriod: BlockNumber = 5 * MINUTES;
 	pub const TreasuryPalletId: PalletId = PalletId(*b"py/trsry");
 	pub const MaxApprovals: u32 = 100;
@@ -722,16 +707,9 @@ impl pallet_treasury::Config for Runtime {
 	type MaxApprovals = MaxApprovals;
 }
 
-
-// Implementation of multisig pallet
-
-pub const MILLICENTS: Balance = 1_000_000_000;
-pub const CENTS: Balance = 1_000 * MILLICENTS;
-pub const DOLLARS: Balance = 100 * CENTS;
-
 parameter_types! {
-	pub const DepositBase: Balance = 5 * CENTS;
-	pub const DepositFactor: Balance = 10 * CENTS;
+	pub const DepositBase: Balance = 5 * MICROUNIT;
+	pub const DepositFactor: Balance = 10 * MICROUNIT;
 	pub const MaxSignatories: u16 = 20;
 }
 
@@ -761,7 +739,7 @@ impl pallet_author_slot_filter::Config for Runtime {
 }
 
 parameter_types! {
-	pub const DepositAmount: Balance = 100 * GLMR;
+	pub const DepositAmount: Balance = 100 * UNIT;
 }
 // This is a simple session key manager. It should probably either work with, or be replaced
 // entirely by pallet sessions

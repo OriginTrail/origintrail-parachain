@@ -347,9 +347,9 @@ parameter_types! {
 	/// Default percent of inflation set aside for parachain bond every round
 	pub const DefaultParachainBondReservePercent: Percent = Percent::from_percent(30);
 	/// Minimum stake required to be reserved to be a collator is 1_000
-	pub const MinCollatorStk: u128 = KILOUNIT;
+	pub const MinCollatorStk: u128 = KILOTRAC;
 	/// Minimum stake required to be reserved to be a nominator is 5
-	pub const MinNominatorStk: u128 = 5 * UNIT;
+	pub const MinNominatorStk: u128 = 5 * TRAC;
 }
 impl parachain_staking::Config for Runtime {
 	type Event = Event;
@@ -684,7 +684,7 @@ impl pallet_membership::Config<CouncilMembershipInstance> for Runtime {
 
 parameter_types! {
 	pub const ProposalBond: Permill = Permill::from_percent(5);
-	pub const ProposalBondMinimum: Balance = 100 * MICROUNIT;
+	pub const ProposalBondMinimum: Balance = 100 * MICROTRAC;
 	pub const SpendPeriod: BlockNumber = 5 * MINUTES;
 	pub const TreasuryPalletId: PalletId = PalletId(*b"py/trsry");
 	pub const MaxApprovals: u32 = 100;
@@ -708,8 +708,8 @@ impl pallet_treasury::Config for Runtime {
 }
 
 parameter_types! {
-	pub const DepositBase: Balance = 5 * MICROUNIT;
-	pub const DepositFactor: Balance = 10 * MICROUNIT;
+	pub const DepositBase: Balance = 5 * MICROTRAC;
+	pub const DepositFactor: Balance = 10 * MICROTRAC;
 	pub const MaxSignatories: u16 = 20;
 }
 
@@ -739,7 +739,7 @@ impl pallet_author_slot_filter::Config for Runtime {
 }
 
 parameter_types! {
-	pub const DepositAmount: Balance = 100 * UNIT;
+	pub const DepositAmount: Balance = 100 * TRAC;
 }
 // This is a simple session key manager. It should probably either work with, or be replaced
 // entirely by pallet sessions

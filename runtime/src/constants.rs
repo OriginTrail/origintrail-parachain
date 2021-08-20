@@ -5,13 +5,13 @@ pub mod currency {
 	pub const KILOWEI: Balance = 1_000;
 	pub const MEGAWEI: Balance = 1_000_000;
 	pub const GIGAWEI: Balance = 1_000_000_000;
-	pub const MICROUNIT: Balance = 1_000_000_000_000;
-	pub const MILLIUNIT: Balance = 1_000_000_000_000_000;
-	pub const UNIT: Balance = 1_000_000_000_000_000_000;
-	pub const KILOUNIT: Balance = 1_000_000_000_000_000_000_000;
+	pub const MICROTRAC: Balance = 1_000_000_000_000;
+	pub const MILLITRAC: Balance = 1_000_000_000_000_000;
+	pub const TRAC: Balance = 1_000_000_000_000_000_000;
+	pub const KILOTRAC: Balance = 1_000_000_000_000_000_000_000;
 
 	pub const fn deposit(items: u32, bytes: u32) -> Balance {
-		items as Balance * 15 * MICROUNIT + (bytes as Balance) * 6 * MICROUNIT
+		items as Balance * 15 * MICROTRAC + (bytes as Balance) * 6 * MICROTRAC
 	}
 }
 

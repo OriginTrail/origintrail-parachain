@@ -1,5 +1,5 @@
 use cumulus_primitives_core::ParaId;
-use origintrail_parachain_runtime::{AccountId, EVMConfig, EthereumConfig, UNIT, InflationInfo, Range, AuthorFilterConfig,
+use origintrail_parachain_runtime::{AccountId, EVMConfig, EthereumConfig, TRAC, InflationInfo, Range, AuthorFilterConfig,
 									AuthorMappingConfig, Balance, BalancesConfig, EthereumChainIdConfig, CouncilConfig, 
 									GenesisConfig, ParachainInfoConfig, SudoConfig, SystemConfig, WASM_BINARY, ParachainStakingConfig};
 
@@ -54,11 +54,11 @@ pub fn development_config(para_id: ParaId) -> ChainSpec {
 				vec![(
 					AccountId::from_str("6Be02d1d3665660d22FF9624b7BE0551ee1Ac91b").unwrap(),
 					get_from_seed::<NimbusId>("Alice"),
-					1_000 * UNIT,
+					1_000 * TRAC,
 				)],
 				// Nominations
 				vec![],
-				moonbeam_inflation_config(),
+				parachain_inflation_config(),
 				vec![
 					AccountId::from_str("6Be02d1d3665660d22FF9624b7BE0551ee1Ac91b").unwrap(),
 					AccountId::from_str("81D288F95a78bc074ea7e831DEb6B046fEb3ef61").unwrap(),
@@ -73,7 +73,11 @@ pub fn development_config(para_id: ParaId) -> ChainSpec {
 		vec![],
 		None,
 		None,
-		Some(serde_json::from_str("{\"tokenDecimals\": 18}").expect("Provided valid json map")),
+		Some(serde_json::from_str(
+			"{\"tokenDecimals\": 18, \"tokenSymbol\": \"TRAC\", \"SS58Prefix\": 101}",
+		)
+			.expect("Provided valid json map")
+		),
 		Extensions {
 			relay_chain: "dev-service".into(),
 			para_id: para_id.into(),
@@ -95,11 +99,11 @@ pub fn local_testnet_config(para_id: ParaId) -> ChainSpec {
 				vec![(
 					AccountId::from_str("6Be02d1d3665660d22FF9624b7BE0551ee1Ac91b").unwrap(),
 					get_from_seed::<NimbusId>("Alice"),
-					1_000 * UNIT,
+					1_000 * TRAC,
 				)],
 				// Nominations
 				vec![],
-				moonbeam_inflation_config(),
+				parachain_inflation_config(),
 				vec![AccountId::from_str("6Be02d1d3665660d22FF9624b7BE0551ee1Ac91b").unwrap()],
 				para_id,
 				2160, //ChainId
@@ -108,7 +112,11 @@ pub fn local_testnet_config(para_id: ParaId) -> ChainSpec {
 		vec![],
 		None,
 		None,
-		Some(serde_json::from_str("{\"tokenDecimals\": 18}").expect("Provided valid json map")),
+		Some(serde_json::from_str(
+			"{\"tokenDecimals\": 18, \"tokenSymbol\": \"TRAC\", \"SS58Prefix\": 101}",
+		)
+			.expect("Provided valid json map")
+		),
 		Extensions {
 			relay_chain: "local_testnet".into(),
 			para_id: para_id.into(),
@@ -116,12 +124,12 @@ pub fn local_testnet_config(para_id: ParaId) -> ChainSpec {
 	)
 }
 
-pub fn moonbeam_inflation_config() -> InflationInfo<Balance> {
+pub fn parachain_inflation_config() -> InflationInfo<Balance> {
 	InflationInfo {
 		expect: Range {
-			min: 100_000 * UNIT,
-			ideal: 200_000 * UNIT,
-			max: 500_000 * UNIT,
+			min: 100_000 * TRAC,
+			ideal: 200_000 * TRAC,
+			max: 500_000 * TRAC,
 		},
 		annual: Range {
 			min: Perbill::from_percent(4),

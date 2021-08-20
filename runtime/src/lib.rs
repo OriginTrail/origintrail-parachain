@@ -702,23 +702,6 @@ impl pallet_treasury::Config for Runtime {
 	type MaxApprovals = MaxApprovals;
 }
 
-parameter_types! {
-	pub const DepositBase: Balance = 5 * MICROTRAC;
-	pub const DepositFactor: Balance = 10 * MICROTRAC;
-	pub const MaxSignatories: u16 = 20;
-}
-
-impl pallet_multisig::Config for Runtime {
-    type Event = Event;
-    type Call = Call;
-    type Currency = Balances;
-    type DepositBase = DepositBase;
-    type DepositFactor = DepositFactor;
-    type MaxSignatories = MaxSignatories;
-    type WeightInfo = ();
-}
-
-
 impl pallet_author_inherent::Config for Runtime {
 	type AuthorId = NimbusId;
 	type SlotBeacon = pallet_author_inherent::RelayChainBeacon<Self>;
@@ -765,7 +748,6 @@ construct_runtime!(
 		//XcmpQueue: cumulus_pallet_xcmp_queue::{Pallet, Call, Storage, Event<T>},
 		PolkadotXcm: pallet_xcm::{Pallet, Call, Event<T>, Origin},
 		CumulusXcm: cumulus_pallet_xcm::{Pallet, Call, Event<T>, Origin},
-		Multisig: pallet_multisig::{Pallet, Call, Storage, Event<T>},
 		Scheduler: pallet_scheduler::{Pallet, Call, Storage, Event<T>},
 		Sudo: pallet_sudo::{Pallet, Call, Config<T>, Storage, Event<T>},
 		EthereumChainId: pallet_ethereum_chain_id::{Pallet, Storage, Config},

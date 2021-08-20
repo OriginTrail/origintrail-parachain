@@ -67,7 +67,6 @@ frame-system-rpc-runtime-api = { git = 'https://github.com/paritytech/substrate'
 ## Substrate Pallet Dependencies
 pallet-balances = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 pallet-collective = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
-pallet-multisig = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 pallet-membership = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 pallet-randomness-collective-flip = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
 pallet-scheduler = { git = 'https://github.com/paritytech/substrate', branch = 'polkadot-v0.9.6', default-features = false }
@@ -152,7 +151,6 @@ std = [
 	'fp-rpc/std',
 	'pallet-transaction-payment-rpc-runtime-api/std',
 	'sha3/std',
-	'pallet-multisig/std',
 	'pallet-scheduler/std',
 	'pallet-author-inherent/std',
 	'evm/std',

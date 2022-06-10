@@ -10,10 +10,10 @@ pub mod xcm_config;
 
 use smallvec::smallvec;
 use sp_api::impl_runtime_apis;
-use sp_core::{crypto::KeyTypeId, OpaqueMetadata};
+use sp_core::{crypto::KeyTypeId, OpaqueMetadata, sr25519};
 use sp_runtime::{
 	create_runtime_str, generic, impl_opaque_keys,
-	traits::{AccountIdLookup, BlakeTwo256, Block as BlockT, ConvertInto, IdentifyAccount, Verify},
+	traits::{AccountIdLookup, BlakeTwo256, Block as BlockT, ConvertInto, IdentifyAccount, Verify, BlockNumberProvider, AccountIdConversion},
 	transaction_validity::{TransactionSource, TransactionValidity},
 	ApplyExtrinsicResult, MultiSignature,
 };
@@ -513,6 +513,39 @@ impl pallet_vesting::Config for Runtime {
 	const MAX_VESTING_SCHEDULES: u32 = 28;
 }
 
+pub struct RelayChainBlockNumberProvider<T>(sp_std::marker::PhantomData<T>);
+
+impl<T: cumulus_pallet_parachain_system::Config> BlockNumberProvider
+for RelayChainBlockNumberProvider<T>
+{
+	type BlockNumber = BlockNumber;
+
+	fn current_block_number() -> Self::BlockNumber {
+		cumulus_pallet_parachain_system::Pallet::<T>::validation_data()
+			.map(|d| d.relay_parent_number)
+			.unwrap_or_default()
+	}
+}
+
+parameter_types! {
+
+	pub FutureAuctionTreasuryId: AccountId = PalletId(*b"Tresury1").into_account();
+	pub CollatorsIncentivesTreasuryId: AccountId = PalletId(*b"Tresury2").into_account();
+	pub DkgIncentivesTreasuryId: AccountId = PalletId(*b"Tresury3").into_account();
+	pub CommunityTreasuryId: AccountId = PalletId(*b"Tresury4").into_account();
+	pub const InflationBlockInterval: u32 = 100; // every time per how many blocks inflation is applied
+}
+
+impl pallet_inflation::Config for Runtime {
+	type Currency = Balances;
+	type FutureAuctionTreasuryId = FutureAuctionTreasuryId;
+	type CollatorsIncentivesTreasuryId = CollatorsIncentivesTreasuryId;
+	type DkgIncentivesTreasuryId = DkgIncentivesTreasuryId;
+	type CommunityTreasuryId = CommunityTreasuryId;
+	type InflationBlockInterval = InflationBlockInterval;
+	type BlockNumberProvider = RelayChainBlockNumberProvider<Runtime>;
+}
+
 /// Configure the pallet template in pallets/template.
 impl pallet_template::Config for Runtime {
 	type Event = Event;
@@ -538,6 +571,7 @@ construct_runtime!(
 		Balances: pallet_balances::{Pallet, Call, Storage, Config<T>, Event<T>} = 10,
 		TransactionPayment: pallet_transaction_payment::{Pallet, Storage} = 11,
 		Vesting: pallet_vesting::{Pallet, Call, Storage, Event<T>, Config<T>} = 12,
+		Inflation: pallet_inflation::{Pallet, Call, Storage}  = 13,
 
 		// Collator support. The order of these 4 are important and shall not change.
 		Authorship: pallet_authorship::{Pallet, Call, Storage} = 20,
